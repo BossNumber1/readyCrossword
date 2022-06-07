@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>crossword page</title>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <link rel="stylesheet" href="style/main.css" />
+        <link
+            rel="stylesheet"
+            href="./malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.css"
+        />
+        <script src="./malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.concat.min.js"></script>
+        <style>
+            body {
+                background-image: url(./imgs/background.svg);
+                background-size: 100%;
+            }
+
+            #additionalFirst a {
+                pointer-events: none;
+            }
+
+            /* for crossword page */
+
+            .newPaintSelectedField {
+                /*border: 3px solid blue !important;*/
+                background-color: white !important;
+            }
+
+            .newPaintSelectedField input {
+                color: #0a4070 !important;
+            }
+
+            /* other */
+
+            .changeColorsQuestionCross {
+                background-color: #0079c2;
+                color: white;
+            }
+
+            .changeColorsQuestionCrossVer {
+                background-color: #2aaeef;
+                color: white;
+            }
+
+            .mCS-orange.mCSB_scrollTools .mCSB_draggerContainer {
+                z-index: -1;
+            }
+
+            .mCS-orange.mCSB_scrollTools .mCSB_draggerRail {
+                width: 1.5px;
+                background-color: #0079c299;
+                opacity: 0.6;
+            }
+
+            #mCSB_1_scrollbar_vertical .mCSB_dragger {
+                margin-top: 10px;
+                padding: 12px 0 12px 0;
+                height: 5px !important;
+                background-color: white;
+            }
+
+            #mCSB_1_scrollbar_vertical .mCSB_dragger_bar {
+                /*  .mCSB_dragger_bar {*/
+                background-color: #0079c2;
+                width: 6px;
+                height: 6px;
+                border-radius: 50px;
+                z-index: 200;
+                cursor: pointer;
+                margin-bottom: 12px;
+            }
+
+            #distanceTraveled,
+            #distanceTraveledVer {
+                background-color: #0079c2;
+                height: 5px;
+                width: 16px;
+                opacity: 1;
+            }
+
+            #distanceTraveledCommonBottom2,
+            #distanceTraveledCommonBottom3 {
+                background-color: #c4c24f;
+                height: 5px;
+                width: 16px;
+                opacity: 1;
+            }
+
+            #mCSB_2_scrollbar_vertical .mCSB_dragger {
+                /* .mCSB_dragger {*/
+                margin-top: 10px;
+                padding: 12px 0 12px 0;
+                height: 5px !important;
+                background-color: white;
+            }
+
+            #mCSB_2_scrollbar_vertical .mCSB_dragger_bar {
+                background-color: #0079c2;
+                width: 6px;
+                height: 6px;
+                border-radius: 50px;
+                z-index: 200;
+                cursor: pointer;
+                margin-bottom: 12px;
+            }
+
+            .filled {
+                background-color: white !important;
+            }
+
+            .filled input {
+                /* color: red !important;*/
+                color: #0a4070 !important;
+            }
+
+            @media (min-width: 1000px) and (orientation: landscape) {
+                #closeIcon {
+                    transform: scale(0.7);
+                    margin-left: 367px;
+                }
+
+                #definitions {
+                    height: 570px;
+                }
+            }
+
+            @media (min-width: 1500px) and (orientation: landscape) {
+                #closeIcon {
+                    transform: scale(0.8);
+                    margin-left: 419px;
+                }
+
+                #definitions {
+                    height: 635px;
+                }
+            }
+
+            @media (min-width: 1700px) and (orientation: landscape) {
+                #closeIcon {
+                    transform: scale(0.9);
+                    margin-left: 471px;
+                }
+                /*
+                #definitions {
+                    height: 670px;
+                }*/
+            }
+
+            @media (min-width: 1900px) and (orientation: landscape) {
+                #closeIcon {
+                    margin-left: 522px;
+                }
+
+                #definitions {
+                    height: 770px;
+                }
+            }
+
+            @media (min-width: 2000px) and (orientation: landscape) {
+                #closeIcon {
+                    margin-left: 589px;
+                }
+
+                #definitions {
+                    height: 877px;
+                }
+            }
+
+            @media (min-width: 2300px) and (orientation: landscape) {
+                #closeIcon {
+                    margin-left: 675px;
+                }
+
+                #definitions {
+                    height: 994px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="crosswordPage">
+            <div id="content">
+                <table class="crossword">
+                    <tbody>
+                        <tr data-row="0">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7" id="id7" class="verQuestion">
+                                7
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" id="id4" class="verQuestion">
+                                4
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" id="id16" class="verQuestion">
+                                16
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="1">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7" id="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4" id="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16" id="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="2">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6" id="id5" class="horQuestion">
+                                5
+                            </td>
+                            <td
+                                data-column="7"
+                                data-ver="d7"
+                                data-hor="d5"
+                                id="d5"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="9" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="10" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="11" data-hor="d5" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="13" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="14" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="15" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="17" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18" data-hor="d5">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21" id="id13" class="verQuestion">
+                                13
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25" id="id19" class="horQuestion">
+                                19
+                            </td>
+                            <td
+                                data-column="26"
+                                data-ver="d16"
+                                data-hor="d19"
+                                id="d19"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27" data-hor="d19">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="28" data-hor="d19">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="3">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" id="id11" class="verQuestion">
+                                11
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21" data-ver="d13" id="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" id="id18" class="verQuestion">
+                                18
+                            </td>
+                        </tr>
+
+                        <tr data-row="4">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11" id="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10" id="id8" class="horQuestion">
+                                8
+                            </td>
+                            <td
+                                data-column="11"
+                                data-ver="d4"
+                                data-hor="d8"
+                                id="d8"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="13" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="14" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="15" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="17" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="19" data-hor="d8">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="20"></td>
+                            <td data-column="21" data-ver="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18" id="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="5">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" id="id10" class="verQuestion">
+                                10
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21" data-ver="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="6">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10" id="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17" id="id6" class="verQuestion">
+                                6
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19" id="id14" class="horQuestion">
+                                14
+                            </td>
+                            <td data-column="20" data-hor="d14" id="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="21" data-hor="d14" data-ver="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="23" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="24" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="26" data-hor="d14" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="28" data-hor="d14">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="29" data-hor="d14" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="7">
+                            <td data-column="0" id="id9" class="horQuestion">
+                                9
+                            </td>
+                            <td data-column="1" id="d9" data-hor="d9">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="2" data-hor="d9" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3" data-hor="d9">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="4" data-hor="d9">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="5" data-hor="d9" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6" data-hor="d9">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="7" data-hor="d9" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8" data-hor="d9">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6" id="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21" data-ver="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="8">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16" id="id12" class="horQuestion">
+                                12
+                            </td>
+                            <td
+                                data-column="17"
+                                data-ver="d6"
+                                data-hor="d12"
+                                id="d12"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18" data-hor="d12">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="19" data-hor="d12">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="20" data-hor="d12">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="21" data-ver="d13" data-hor="d12">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22" data-hor="d12">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="9">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21" data-ver="d13">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="10">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15"></td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="11">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11" data-ver="d4">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" id="id2" class="verQuestion">
+                                2
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24" id="id15" class="verQuestion">
+                                15
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="12">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7" data-ver="d7">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10" id="id3" class="horQuestion">
+                                3
+                            </td>
+                            <td
+                                data-column="11"
+                                data-ver="d4"
+                                data-hor="d3"
+                                id="d3"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="13" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="14" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td
+                                data-column="15"
+                                data-hor="d3"
+                                data-ver="d2"
+                                id="d2"
+                            >
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="17" data-hor="d3" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="19" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="20" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="21" data-hor="d3">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24" data-ver="d15" id="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="13">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11"></td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24" data-ver="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="14">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2" data-ver="d10">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" data-ver="d11">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8" id="id1" class="horQuestion">
+                                1
+                            </td>
+                            <td data-column="9" data-hor="d1" id="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="10" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="11" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="13" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="14" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="15" data-hor="d1" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="17" data-hor="d1" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="19" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="20" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="21" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="23" data-hor="d1">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="24" data-hor="d1" data-ver="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26" data-ver="d16">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29" data-ver="d18">
+                                <input type="text" maxlength="1" />
+                            </td>
+                        </tr>
+
+                        <tr data-row="15">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11"></td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17" data-ver="d6">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24" data-ver="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26"></td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="16">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11"></td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18" id="id20" class="horQuestion">
+                                20
+                            </td>
+                            <td data-column="19" data-hor="d20" id="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="20" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="21" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="22" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="23" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="24" data-hor="d20" data-ver="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="26" data-hor="d20">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="17">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5" id="id17" class="horQuestion">
+                                17
+                            </td>
+                            <td data-column="6" data-hor="d17" id="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="7" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="8" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="9" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="10" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="11" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="12" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="13" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="14" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="15" data-hor="d17" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="17" data-hor="d17">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24" data-ver="d15">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="25"></td>
+                            <td data-column="26"></td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="18">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11"></td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26"></td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+
+                        <tr data-row="19">
+                            <td data-column="0"></td>
+                            <td data-column="1"></td>
+                            <td data-column="2"></td>
+                            <td data-column="3"></td>
+                            <td data-column="4"></td>
+                            <td data-column="5"></td>
+                            <td data-column="6"></td>
+                            <td data-column="7"></td>
+                            <td data-column="8"></td>
+                            <td data-column="9"></td>
+                            <td data-column="10"></td>
+                            <td data-column="11"></td>
+                            <td data-column="12"></td>
+                            <td data-column="13"></td>
+                            <td data-column="14"></td>
+                            <td data-column="15" data-ver="d2">
+                                <input type="text" maxlength="1" />
+                            </td>
+                            <td data-column="16"></td>
+                            <td data-column="17"></td>
+                            <td data-column="18"></td>
+                            <td data-column="19"></td>
+                            <td data-column="20"></td>
+                            <td data-column="21"></td>
+                            <td data-column="22"></td>
+                            <td data-column="23"></td>
+                            <td data-column="24"></td>
+                            <td data-column="25"></td>
+                            <td data-column="26"></td>
+                            <td data-column="27"></td>
+                            <td data-column="28"></td>
+                            <td data-column="29"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="definitions">
+                    <div id="additionally">
+                        <div id="closeIcon">
+                            <img src="./imgs/closeIcon.svg" />
+                        </div>
+                        <div id="timer">
+                            <div id="firstElemTimer"></div>
+                            <div id="secondElemTimer">0 00</div>
+                            <div id="thirdElemTimer">мин.</div>
+                        </div>
+                    </div>
+                    <div id="definitionsHor">
+                        <h3 id="horizontalTitle">По горизонтали</h3>
+                        <div id="definitionsHorContent">
+                            <ol type="1" id="hor" class="pointer">
+                                <li data-def="1" id="li0">
+                                    <div>1.</div>
+                                    <div class="horizontalQuestion">
+                                        Процедура определения потенциальных
+                                        участников закупок, проводимых Группой
+                                        Газпром, способных выполнять
+                                        определенные виды работ (услуг),
+                                        осуществлять поставку товаров в
+                                        соответствии с установленными
+                                        требованиями к производству, качеству и
+                                        безопасности товаров, результатам работ
+                                        и услуг.
+                                    </div>
+                                </li>
+                                <li data-def="3" id="li1">
+                                    <div>3.</div>
+                                    <div class="horizontalQuestion">
+                                        Соперничество между участниками рынка
+                                        товаров, работ, услуг за максимально
+                                        эффективные условия купли-продажи и
+                                        производства.
+                                    </div>
+                                </li>
+                                <li data-def="5" id="li2">
+                                    <div>5.</div>
+                                    <div class="horizontalQuestion">
+                                        Прилагательное к слову «отбор». Вместе
+                                        обозначают один из способов закупки
+                                        товаров, работ, услуг.
+                                    </div>
+                                </li>
+                                <li data-def="8" id="li3">
+                                    <div>8.</div>
+                                    <div class="horizontalQuestion">
+                                        Нормативный акт, которым
+                                        регламентируется закупочная деятельность
+                                        Заказчика.
+                                    </div>
+                                </li>
+                                <li data-def="9" id="li4">
+                                    <div>9.</div>
+                                    <div class="horizontalQuestion">
+                                        Её состав формируется и утверждается
+                                        Организатором для определения поставщика
+                                        (исполнителя, подрядчика) по результатам
+                                        проведения конкурентной закупки,
+                                        подведения итогов, отдельных этапов и
+                                        процедур конкурентной закупки.
+                                    </div>
+                                </li>
+                                <li data-def="12" id="li5">
+                                    <div>12.</div>
+                                    <div class="horizontalQuestion">
+                                        Обращение участника закупки в адрес
+                                        Заказчика/Организатора такой закупки в
+                                        целях получения разъяснений положений
+                                        извещения и (или) документации о
+                                        закупке.
+                                    </div>
+                                </li>
+                                <li data-def="14" id="li6">
+                                    <div>14.</div>
+                                    <div class="horizontalQuestion">
+                                        Система наблюдений в сфере закупок,
+                                        осуществляемых на постоянной основе
+                                        посредством сбора, обобщения,
+                                        систематизации и оценки информации.
+                                    </div>
+                                </li>
+                                <li data-def="17" id="li7">
+                                    <div>17.</div>
+                                    <div class="horizontalQuestion">
+                                        Процесс формирования, утверждения и
+                                        ведения планов закупок товаров, работ,
+                                        услуг.
+                                    </div>
+                                </li>
+                                <li data-def="19" id="li8">
+                                    <div>19.</div>
+                                    <div class="horizontalQuestion">
+                                        Часть товаров (работ, услуг), выделенная
+                                        по определенным критериям, на которую
+                                        допускается подача отдельной заявки на
+                                        участие в закупке.
+                                    </div>
+                                </li>
+                                <li data-def="20" id="li9">
+                                    <div>20.</div>
+                                    <div class="horizontalQuestion">
+                                        Документ, фиксирующий решение закупочной
+                                        комиссии по результатам проведенной
+                                        процедуры.
+                                    </div>
+                                </li>
+                                <div
+                                    id="distanceTraveled"
+                                    style="
+                                        background-color: #0079c2;
+                                        opacity: 1;
+                                        height: 10px;
+                                        width: 2px;
+                                        margin-left: 7px;
+                                    "
+                                ></div>
+                            </ol>
+                        </div>
+                    </div>
+                    <div id="definitionsVer">
+                        <h3 id="verticalTitle">По вертикали</h3>
+                        <div id="definitionsVerContent">
+                            <ol id="ver">
+                                <li data-def="2" id="li0ver">
+                                    <div>2.</div>
+                                    <div class="verticalQuestion">
+                                        Любое юридическое лицо или несколько
+                                        юридических лиц, выступающих на стороне
+                                        одного представителя закупки, независимо
+                                        от организационно-правовой формы, формы
+                                        собственности, места нахождения и места
+                                        происхождения капитала либо любое
+                                        физическое лицо или несколько физических
+                                        лиц, выступающих на стороне одного
+                                        представителя закупки, в том числе
+                                        индивидуальный предприниматель или
+                                        несколько индивидуальных
+                                        предпринимателей, выступающих на стороне
+                                        одного представителя закупки.
+                                    </div>
+                                </li>
+                                <li data-def="4" id="li1ver">
+                                    <div>4.</div>
+                                    <div class="verticalQuestion">
+                                        Привлекаемая генеральным подрядчиком
+                                        организация для частичного или полного
+                                        выполнения обязательств генерального
+                                        подрядчика по договору.
+                                    </div>
+                                </li>
+                                <li data-def="6" id="li2ver">
+                                    <div>6.</div>
+                                    <div class="verticalQuestion">
+                                        Официально публикуемый документ,
+                                        содержащий основную информацию о
+                                        конкретной закупке и сжатое описание
+                                        условий участия.
+                                    </div>
+                                </li>
+                                <li data-def="7" id="li3ver">
+                                    <div>7.</div>
+                                    <div class="verticalQuestion">
+                                        Проводимая на ЭТП ГПБ обязательная
+                                        процедура официального подтверждения
+                                        соответствия регистрируемых
+                                        юридических/физических лиц установленным
+                                        критериям и требованиям.
+                                    </div>
+                                </li>
+                                <li data-def="10" id="li4ver">
+                                    <div>10.</div>
+                                    <div class="verticalQuestion">
+                                        Юридическое или физическое лицо,
+                                        индивидуальный предприниматель,
+                                        осуществляющее поставку товаров.
+                                    </div>
+                                </li>
+                                <li data-def="11" id="li5ver">
+                                    <div>11.</div>
+                                    <div class="verticalQuestion">
+                                        Один из способов защиты интересов
+                                        заказчика, гарантирующий, что победитель
+                                        закупки выполнит условия контракта.
+                                    </div>
+                                </li>
+                                <li data-def="13" id="li6ver">
+                                    <div>13.</div>
+                                    <div class="verticalQuestion">
+                                        Соглашение между двумя или несколькими
+                                        лицами, в котором определяются действия
+                                        об установлении прав и обязанностей для
+                                        обеспечения нужд Заказчика.
+                                    </div>
+                                </li>
+                                <li data-def="15" id="li7ver">
+                                    <div>15.</div>
+                                    <div class="verticalQuestion">
+                                        Комплект документов, содержащий
+                                        предложение участника закупки,
+                                        предоставленное согласно требованиям,
+                                        указанным в документации о закупке.
+                                    </div>
+                                </li>
+                                <li data-def="16" id="li8ver">
+                                    <div>16.</div>
+                                    <div class="verticalQuestion">
+                                        Предложение участника, подаваемое в
+                                        составе заявки в дополнение к основному.
+                                    </div>
+                                </li>
+                                <li data-def="18" id="li9ver">
+                                    <div>18.</div>
+                                    <div class="verticalQuestion">
+                                        Юридическое лицо, которое выполняет для
+                                        заказчика товаров, работ, услуг ряд
+                                        функций по определению поставщика
+                                        (подрядчика, исполнителя), связанных с
+                                        проведением закупочных процедур.
+                                    </div>
+                                </li>
+                                <div
+                                    id="distanceTraveledVer"
+                                    style="
+                                        background-color: #0079c2;
+                                        opacity: 1;
+                                        height: 10px;
+                                        width: 2px;
+                                        margin-left: 7px;
+                                    "
+                                ></div>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="additionalFirst">Cкачать кроссворд в PDF</div>
+                <div id="additionalSecond">Ответы на кроссворд</div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        document
+            .getElementById("closeIcon")
+            .addEventListener("click", function () {
+                localStorage.setItem("closeModalWindow", "true");
+            });
+
+        document
+            .getElementById("additionalFirst")
+            .addEventListener("click", function () {
+                localStorage.setItem("downloadPDF", "true");
+            });
+
+        document
+            .getElementById("additionalSecond")
+            .addEventListener("click", function () {
+                localStorage.setItem("toAnswers", "true");
+            });
+    </script>
+
+    <script>
+        let secundomerId;
+
+        function secundomer() {
+            function textContent() {
+                // получаем сохраненное время
+                let saveSec = localStorage.getItem("secund");
+                let saveMin = localStorage.getItem("minutes");
+                // записываем в часы
+                if (saveSec < 10) {
+                    document.getElementById("secondElemTimer").textContent =
+                        saveMin + " 0" + saveSec;
+                } else {
+                    document.getElementById("secondElemTimer").textContent =
+                        saveMin + " " + saveSec;
+                }
+            }
+
+            secundomerId = setInterval(textContent, 1000);
+        }
+
+        secundomer();
+    </script>
+
+    <script>
+        let allHorLi = document.querySelectorAll("#hor li");
+        let allVerLi = document.querySelectorAll("#ver li");
+
+        // ОБЩИЕ ФУНКЦИИ
+
+        function checkAllCells() {
+            // проверить все клетки
+            let emptyCount = 0;
+            let checkAllTds = document.querySelectorAll(".crossword td");
+
+            for (let i = 0; i < checkAllTds.length; i++) {
+                if (checkAllTds[i].children[0]) {
+                    if (checkAllTds[i].children[0].value !== "") {
+                        // сделать белой заполненную клетку
+
+                        checkAllTds[i].classList.add("filled");
+                    } else {
+                        emptyCount++;
+
+                        checkAllTds[i].style.border = "";
+                        checkAllTds[i].classList.remove("filled");
+                    }
+                }
+            }
+
+            if (emptyCount === 0) {
+                function coreCheckCorrectFilledCrossword() {
+                    let countWrong = 0;
+                    // теперь проверить на соответствие всем буквам
+                    // если всё подходит, то финал
+
+                    // id
+
+                    const groupId = [
+                        { numberId: 1, val: "П" },
+                        { numberId: 2, val: "У" },
+                        { numberId: 3, val: "К" },
+                        { numberId: 4, val: "С" },
+                        { numberId: 5, val: "К" },
+                        { numberId: 6, val: "И" },
+                        { numberId: 7, val: "А" },
+                        { numberId: 8, val: "П" },
+                        { numberId: 9, val: "К" },
+                        { numberId: 10, val: "П" },
+                        { numberId: 11, val: "О" },
+                        { numberId: 12, val: "З" },
+                        { numberId: 13, val: "Д" },
+                        { numberId: 14, val: "М" },
+                        { numberId: 15, val: "З" },
+                        { numberId: 16, val: "А" },
+                        { numberId: 17, val: "П" },
+                        { numberId: 18, val: "О" },
+                        { numberId: 19, val: "Л" },
+                        { numberId: 20, val: "П" },
+                    ]; // correct content all ids
+
+                    const groupRestTd = [
+                        {
+                            numberRow: 14,
+                            numberColumn: 10,
+                            correctVal: "Р",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 11,
+                            correctVal: "Е",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 12,
+                            correctVal: "Д",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 13,
+                            correctVal: "К",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 14,
+                            correctVal: "В",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 15,
+                            correctVal: "А",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 16,
+                            correctVal: "Л",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 17,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 18,
+                            correctVal: "Ф",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 19,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 20,
+                            correctVal: "К",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 21,
+                            correctVal: "А",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 22,
+                            correctVal: "Ц",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 23,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 24,
+                            correctVal: "Я",
+                        },
+
+                        {
+                            numberRow: 12,
+                            numberColumn: 12,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 13,
+                            correctVal: "Н",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 14,
+                            correctVal: "К",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 16,
+                            correctVal: "Р",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 17,
+                            correctVal: "Е",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 18,
+                            correctVal: "Н",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 19,
+                            correctVal: "Ц",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 20,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 21,
+                            correctVal: "Я",
+                        },
+
+                        { numberRow: 2, numberColumn: 8, correctVal: "О" },
+                        { numberRow: 2, numberColumn: 9, correctVal: "Н" },
+                        { numberRow: 2, numberColumn: 10, correctVal: "К" },
+                        { numberRow: 2, numberColumn: 11, correctVal: "У" },
+                        { numberRow: 2, numberColumn: 12, correctVal: "Р" },
+                        { numberRow: 2, numberColumn: 13, correctVal: "Е" },
+                        { numberRow: 2, numberColumn: 14, correctVal: "Н" },
+                        { numberRow: 2, numberColumn: 15, correctVal: "Т" },
+                        { numberRow: 2, numberColumn: 16, correctVal: "Н" },
+                        { numberRow: 2, numberColumn: 17, correctVal: "Ы" },
+                        { numberRow: 2, numberColumn: 18, correctVal: "Й" },
+
+                        { numberRow: 4, numberColumn: 12, correctVal: "О" },
+                        { numberRow: 4, numberColumn: 13, correctVal: "Л" },
+                        { numberRow: 4, numberColumn: 14, correctVal: "О" },
+                        { numberRow: 4, numberColumn: 15, correctVal: "Ж" },
+                        { numberRow: 4, numberColumn: 16, correctVal: "Е" },
+                        { numberRow: 4, numberColumn: 17, correctVal: "Н" },
+                        { numberRow: 4, numberColumn: 18, correctVal: "И" },
+                        { numberRow: 4, numberColumn: 19, correctVal: "Е" },
+
+                        { numberRow: 7, numberColumn: 2, correctVal: "О" },
+                        { numberRow: 7, numberColumn: 3, correctVal: "М" },
+                        { numberRow: 7, numberColumn: 4, correctVal: "И" },
+                        { numberRow: 7, numberColumn: 5, correctVal: "С" },
+                        { numberRow: 7, numberColumn: 6, correctVal: "С" },
+                        { numberRow: 7, numberColumn: 7, correctVal: "И" },
+                        { numberRow: 7, numberColumn: 8, correctVal: "Я" },
+
+                        { numberRow: 8, numberColumn: 18, correctVal: "А" },
+                        { numberRow: 8, numberColumn: 19, correctVal: "П" },
+                        { numberRow: 8, numberColumn: 20, correctVal: "Р" },
+                        { numberRow: 8, numberColumn: 21, correctVal: "О" },
+                        { numberRow: 8, numberColumn: 22, correctVal: "С" },
+
+                        { numberRow: 6, numberColumn: 21, correctVal: "О" },
+                        { numberRow: 6, numberColumn: 22, correctVal: "Н" },
+                        { numberRow: 6, numberColumn: 23, correctVal: "И" },
+                        { numberRow: 6, numberColumn: 24, correctVal: "Т" },
+                        { numberRow: 6, numberColumn: 25, correctVal: "О" },
+                        { numberRow: 6, numberColumn: 26, correctVal: "Р" },
+                        { numberRow: 6, numberColumn: 27, correctVal: "И" },
+                        { numberRow: 6, numberColumn: 28, correctVal: "Н" },
+                        { numberRow: 6, numberColumn: 29, correctVal: "Г" },
+
+                        { numberRow: 17, numberColumn: 7, correctVal: "Л" },
+                        { numberRow: 17, numberColumn: 8, correctVal: "А" },
+                        { numberRow: 17, numberColumn: 9, correctVal: "Н" },
+                        {
+                            numberRow: 17,
+                            numberColumn: 10,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 11,
+                            correctVal: "Р",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 12,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 13,
+                            correctVal: "В",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 14,
+                            correctVal: "А",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 15,
+                            correctVal: "Н",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 16,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 17,
+                            correctVal: "Е",
+                        },
+
+                        { numberRow: 2, numberColumn: 27, correctVal: "О" },
+                        { numberRow: 2, numberColumn: 28, correctVal: "Т" },
+
+                        {
+                            numberRow: 16,
+                            numberColumn: 20,
+                            correctVal: "Р",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 21,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 22,
+                            correctVal: "Т",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 23,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 24,
+                            correctVal: "К",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 25,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 26,
+                            correctVal: "Л",
+                        },
+
+                        {
+                            numberRow: 13,
+                            numberColumn: 15,
+                            correctVal: "Ч",
+                        },
+                        {
+                            numberRow: 15,
+                            numberColumn: 15,
+                            correctVal: "С",
+                        },
+                        {
+                            numberRow: 16,
+                            numberColumn: 15,
+                            correctVal: "Т",
+                        },
+                        {
+                            numberRow: 18,
+                            numberColumn: 15,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 19,
+                            numberColumn: 15,
+                            correctVal: "К",
+                        },
+
+                        { numberRow: 3, numberColumn: 11, correctVal: "Б" },
+                        { numberRow: 5, numberColumn: 11, correctVal: "О" },
+                        { numberRow: 6, numberColumn: 11, correctVal: "Д" },
+                        { numberRow: 7, numberColumn: 11, correctVal: "Р" },
+                        { numberRow: 8, numberColumn: 11, correctVal: "Я" },
+                        { numberRow: 9, numberColumn: 11, correctVal: "Д" },
+                        {
+                            numberRow: 10,
+                            numberColumn: 11,
+                            correctVal: "Ч",
+                        },
+                        {
+                            numberRow: 11,
+                            numberColumn: 11,
+                            correctVal: "И",
+                        },
+
+                        { numberRow: 9, numberColumn: 17, correctVal: "В" },
+                        {
+                            numberRow: 10,
+                            numberColumn: 17,
+                            correctVal: "Е",
+                        },
+                        {
+                            numberRow: 11,
+                            numberColumn: 17,
+                            correctVal: "Щ",
+                        },
+                        {
+                            numberRow: 13,
+                            numberColumn: 17,
+                            correctVal: "Н",
+                        },
+                        {
+                            numberRow: 15,
+                            numberColumn: 17,
+                            correctVal: "Е",
+                        },
+
+                        { numberRow: 3, numberColumn: 7, correctVal: "К" },
+                        { numberRow: 4, numberColumn: 7, correctVal: "Р" },
+                        { numberRow: 5, numberColumn: 7, correctVal: "Е" },
+                        { numberRow: 6, numberColumn: 7, correctVal: "Д" },
+                        { numberRow: 8, numberColumn: 7, correctVal: "Т" },
+                        { numberRow: 9, numberColumn: 7, correctVal: "А" },
+                        { numberRow: 10, numberColumn: 7, correctVal: "Ц" },
+                        { numberRow: 11, numberColumn: 7, correctVal: "И" },
+                        { numberRow: 12, numberColumn: 7, correctVal: "Я" },
+
+                        { numberRow: 8, numberColumn: 2, correctVal: "С" },
+                        { numberRow: 9, numberColumn: 2, correctVal: "Т" },
+                        { numberRow: 10, numberColumn: 2, correctVal: "А" },
+                        { numberRow: 11, numberColumn: 2, correctVal: "В" },
+                        { numberRow: 12, numberColumn: 2, correctVal: "Щ" },
+                        { numberRow: 13, numberColumn: 2, correctVal: "И" },
+                        { numberRow: 14, numberColumn: 2, correctVal: "К" },
+
+                        { numberRow: 5, numberColumn: 5, correctVal: "Б" },
+                        { numberRow: 6, numberColumn: 5, correctVal: "Е" },
+                        { numberRow: 8, numberColumn: 5, correctVal: "П" },
+                        { numberRow: 9, numberColumn: 5, correctVal: "Е" },
+                        { numberRow: 10, numberColumn: 5, correctVal: "Ч" },
+                        { numberRow: 11, numberColumn: 5, correctVal: "Е" },
+                        { numberRow: 12, numberColumn: 5, correctVal: "Н" },
+                        { numberRow: 13, numberColumn: 5, correctVal: "И" },
+                        { numberRow: 14, numberColumn: 5, correctVal: "Е" },
+
+                        { numberRow: 4, numberColumn: 21, correctVal: "О" },
+                        { numberRow: 5, numberColumn: 21, correctVal: "Г" },
+                        { numberRow: 7, numberColumn: 21, correctVal: "В" },
+                        { numberRow: 9, numberColumn: 21, correctVal: "Р" },
+
+                        {
+                            numberRow: 13,
+                            numberColumn: 24,
+                            correctVal: "А",
+                        },
+                        {
+                            numberRow: 15,
+                            numberColumn: 24,
+                            correctVal: "В",
+                        },
+                        {
+                            numberRow: 17,
+                            numberColumn: 24,
+                            correctVal: "А",
+                        },
+
+                        { numberRow: 3, numberColumn: 26, correctVal: "Ь" },
+                        { numberRow: 4, numberColumn: 26, correctVal: "Т" },
+                        { numberRow: 5, numberColumn: 26, correctVal: "Е" },
+                        { numberRow: 7, numberColumn: 26, correctVal: "Н" },
+                        { numberRow: 8, numberColumn: 26, correctVal: "А" },
+                        { numberRow: 9, numberColumn: 26, correctVal: "Т" },
+                        {
+                            numberRow: 10,
+                            numberColumn: 26,
+                            correctVal: "И",
+                        },
+                        {
+                            numberRow: 11,
+                            numberColumn: 26,
+                            correctVal: "В",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 26,
+                            correctVal: "Н",
+                        },
+                        {
+                            numberRow: 13,
+                            numberColumn: 26,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 26,
+                            correctVal: "Е",
+                        },
+
+                        { numberRow: 5, numberColumn: 29, correctVal: "Р" },
+                        { numberRow: 7, numberColumn: 29, correctVal: "А" },
+                        { numberRow: 8, numberColumn: 29, correctVal: "Н" },
+                        { numberRow: 9, numberColumn: 29, correctVal: "И" },
+                        {
+                            numberRow: 10,
+                            numberColumn: 29,
+                            correctVal: "З",
+                        },
+                        {
+                            numberRow: 11,
+                            numberColumn: 29,
+                            correctVal: "А",
+                        },
+                        {
+                            numberRow: 12,
+                            numberColumn: 29,
+                            correctVal: "Т",
+                        },
+                        {
+                            numberRow: 13,
+                            numberColumn: 29,
+                            correctVal: "О",
+                        },
+                        {
+                            numberRow: 14,
+                            numberColumn: 29,
+                            correctVal: "Р",
+                        },
+                    ];
+
+                    function checkValueId() {
+                        for (let i = 0; i < groupId.length; i++) {
+                            core(groupId[i].numberId, groupId[i].val);
+                        }
+
+                        function core(id, correctValue) {
+                            if (document.getElementById("d" + id).children[0]) {
+                                if (
+                                    document
+                                        .getElementById("d" + id)
+                                        .children[0].value.toUpperCase() ===
+                                    correctValue
+                                ) {
+                                    document.getElementById(
+                                        "d" + id
+                                    ).style.border = "1.5px solid green";
+                                } else {
+                                    document.getElementById(
+                                        "d" + id
+                                    ).style.border = "1.5px solid red";
+
+                                    countWrong++;
+                                }
+                            }
+                        }
+                    }
+
+                    function checkValueOtherTd() {
+                        for (let i = 0; i < groupRestTd.length; i++) {
+                            core(
+                                groupRestTd[i].numberRow,
+                                groupRestTd[i].numberColumn,
+                                groupRestTd[i].correctVal
+                            );
+                        }
+
+                        function core(row, column, correctValue) {
+                            let obj = document.querySelector(
+                                '.crossword tr[data-row="' +
+                                    row +
+                                    '"] td[data-column="' +
+                                    column +
+                                    '"]'
+                            );
+
+                            if (obj) {
+                                if (
+                                    obj.children[0].value.toUpperCase() ===
+                                    correctValue
+                                ) {
+                                    obj.style.border = "1.5px solid green";
+                                } else {
+                                    obj.style.border = "1.5px solid red";
+                                    countWrong++;
+                                }
+                            }
+                        }
+                    }
+
+                    checkValueId();
+                    checkValueOtherTd();
+
+                    if (countWrong === 0) {
+                        localStorage.setItem("showFinal", "true");
+                    }
+                }
+
+                coreCheckCorrectFilledCrossword();
+            }
+        }
+
+        function paintCells(indicator, questionNumber, bgcolor, color, route) {
+            if (route === "hor") {
+                let selectedTd = document.querySelectorAll(
+                    "td[data-hor='" + indicator + questionNumber + "']"
+                );
+
+                for (let i = 0; i < selectedTd.length; i++) {
+                    selectedTd[i].style.backgroundColor = bgcolor;
+                    selectedTd[i].children[0].style.color = color;
+                }
+            } else {
+                let selectedTd = document.querySelectorAll(
+                    "td[data-ver='" + indicator + questionNumber + "']"
+                );
+
+                for (let i = 0; i < selectedTd.length; i++) {
+                    selectedTd[i].style.backgroundColor = bgcolor;
+                    selectedTd[i].children[0].style.color = color;
+                }
+            }
+        }
+    </script>
+
+    <script>
+        function addScrollbar() {
+            // new
+            let distanceTraveledCommonBottom2 = document.createElement("div");
+            distanceTraveledCommonBottom2.id = "distanceTraveledCommonBottom2";
+            distanceTraveledCommonBottom2.style.backgroundColor = "#0079c299";
+            distanceTraveledCommonBottom2.style.opacity = 1;
+            distanceTraveledCommonBottom2.style.marginTop = 30 + "px";
+            distanceTraveledCommonBottom2.style.height = 1600 + "px";
+            distanceTraveledCommonBottom2.style.width = "2px";
+            distanceTraveledCommonBottom2.style.marginLeft = "7px";
+
+            let distanceTraveledCommonBottom3 = document.createElement("div");
+            distanceTraveledCommonBottom3.id = "distanceTraveledCommonBottom3";
+            distanceTraveledCommonBottom3.style.backgroundColor = "#0079c299";
+            distanceTraveledCommonBottom3.style.opacity = 1;
+            distanceTraveledCommonBottom3.style.marginTop = 30 + "px";
+            distanceTraveledCommonBottom3.style.height = 1600 + "px";
+            distanceTraveledCommonBottom3.style.width = "2px";
+            distanceTraveledCommonBottom3.style.marginLeft = "7px";
+            // for Hor -------------------------------------------------------------------------------------------
+
+            $("#hor").mCustomScrollbar({
+                theme: "orange",
+                callbacks: {
+                    whileScrolling: function () {
+                        document.getElementById(
+                            "distanceTraveled"
+                        ).style.height = this.mcs.draggerTop + "px";
+                    },
+                },
+            });
+
+            let distanceTraveled = document.getElementById("distanceTraveled");
+
+            let mCSB_1_container = document.getElementById(
+                "mCSB_1_scrollbar_vertical"
+            );
+            mCSB_1_container.style.display = "flex";
+            mCSB_1_container.appendChild(distanceTraveled);
+            mCSB_1_container.appendChild(distanceTraveledCommonBottom2);
+
+            document.getElementById(
+                "mCSB_1_scrollbar_vertical"
+            ).style.zIndex = 12;
+
+            // for Ver -------------------------------------------------------------------------------------------
+
+            $("#ver").mCustomScrollbar({
+                theme: "orange",
+                callbacks: {
+                    whileScrolling: function () {
+                        document.getElementById(
+                            "distanceTraveledVer"
+                        ).style.height = this.mcs.draggerTop + "px";
+                    },
+                },
+            });
+
+            let distanceTraveledVer = document.getElementById(
+                "distanceTraveledVer"
+            );
+
+            let mCSB_2_container = document.getElementById(
+                "mCSB_2_scrollbar_vertical"
+            );
+            mCSB_2_container.style.display = "flex";
+            mCSB_2_container.appendChild(distanceTraveledVer);
+            mCSB_2_container.appendChild(distanceTraveledCommonBottom3);
+
+            document.getElementById(
+                "mCSB_2_scrollbar_vertical"
+            ).style.zIndex = 12;
+        }
+
+        addScrollbar();
+
+        function changeList(numberQuestionSelected, typeLi) {
+            let newList = []; // содержимое нового списка
+            let oldList; // содержимое прежнего списка
+
+            if (typeLi === "hor") {
+                oldList = document.querySelectorAll("#hor li");
+            } else if (typeLi === "ver") {
+                oldList = document.querySelectorAll("#ver li");
+            }
+
+            for (let i = 0; i < oldList.length; i++) {
+                let def = oldList[i].dataset.def;
+                let content = oldList[i].children[1].innerText;
+
+                newList.push({
+                    def: def,
+                    content: content,
+                }); // наполняем массив нового списка старыми значениями
+            }
+
+            core();
+
+            // changed old list new values
+            for (let i = 0; i < oldList.length; i++) {
+                oldList[i].dataset.def = newList[i].def;
+                oldList[i].children[0].textContent = newList[i].def + ".";
+                oldList[i].children[1].textContent = newList[i].content;
+            }
+
+            function core() {
+                // меняем список
+                for (let i = 0; i < newList.length; i++) {
+                    if (+newList[i].def === +numberQuestionSelected) {
+                        [newList[0], newList[i]] = [newList[i], newList[0]];
+                    }
+                }
+
+                if (typeLi === "hor") {
+                    // дефолтим пройденное растояние
+                    document.getElementById("distanceTraveled").style.height =
+                        10 + "px";
+
+                    // дефолтим позицию ползунка
+                    document.getElementById(
+                        "mCSB_1_dragger_vertical"
+                    ).style.top = 0 + "px";
+
+                    // дефолтим позицию списка
+                    $("#hor").mCustomScrollbar("scrollTo", "top", "100");
+                }
+
+                if (typeLi === "ver") {
+                    // дефолтим пройденное растояние
+                    document.getElementById(
+                        "distanceTraveledVer"
+                    ).style.height = 10 + "px";
+
+                    // дефолтим позицию ползунка
+                    document.getElementById(
+                        "mCSB_2_dragger_vertical"
+                    ).style.top = 0 + "px";
+
+                    // дефолтим позицию списка
+                    $("#ver").mCustomScrollbar("scrollTo", "top", "100");
+                }
+            }
+        }
+    </script>
+
+    <script>
+        // общие переменные
+        let mainRout, dataCurrentCell;
+        let clickedId = "false",
+            clickedOtherCells = "false",
+            clickedQuestion = "false",
+            keydowned = "false";
+        const horCells = [1, 3, 5, 8, 9, 12, 14, 17, 19, 20];
+        const verCells = [2, 4, 6, 7, 10, 11, 13, 15, 16, 18];
+
+        // общие функции
+
+        // отладочные
+        function consoler(val) {
+            console.log(val);
+        }
+
+        // другие
+
+        function addColorLiHor(numberQuestion) {
+            for (let i = 0; i < allHorLi.length; i++) {
+                if (+allHorLi[i].dataset.def === +numberQuestion) {
+                    allHorLi[i].children[1].classList.add(
+                        "changeColorsQuestionCross"
+                    );
+                }
+            }
+        }
+
+        function addColorLiVer(numberQuestion) {
+            for (let i = 0; i < allVerLi.length; i++) {
+                if (+allVerLi[i].dataset.def === +numberQuestion) {
+                    allVerLi[i].children[1].classList.add(
+                        "changeColorsQuestionCrossVer"
+                    );
+                }
+            }
+        }
+
+        function removeColorLiHor(numberQuestion) {
+            for (let i = 0; i < allHorLi.length; i++) {
+                if (+allHorLi[i].dataset.def === +numberQuestion) {
+                    allHorLi[i].children[1].classList.remove(
+                        "changeColorsQuestionCross"
+                    );
+                }
+            }
+        }
+
+        function removeColorLiVer(numberQuestion) {
+            for (let i = 0; i < allVerLi.length; i++) {
+                if (+allVerLi[i].dataset.def === +numberQuestion) {
+                    allVerLi[i].children[1].classList.remove(
+                        "changeColorsQuestionCrossVer"
+                    );
+                }
+            }
+        }
+
+        function defaultPaintAllCells() {
+            // дефолтнуть все клетки
+            // получаем весь набор
+            const allCells = document.querySelectorAll(".crossword td");
+
+            // перебираем и дефолтим
+            for (let i = 0; i < allCells.length; i++) {
+                allCells[i].classList.remove("newPaintSelectedField");
+            }
+        }
+
+        function defaultAllHorLi() {
+            // дефолтнуть все горизонтальные вопросы
+            for (let i = 0; i < allHorLi.length; i++) {
+                allHorLi[i].children[1].classList.remove(
+                    "changeColorsQuestionCross"
+                );
+            }
+        }
+
+        function defaultAllVerLi() {
+            // дефолтнуть все вертикальные вопросы
+            for (let i = 0; i < allVerLi.length; i++) {
+                allVerLi[i].children[1].classList.remove(
+                    "changeColorsQuestionCrossVer"
+                );
+            }
+        }
+
+        function defaultAllLiOnCP() {
+            // дефолтнуть все вопросы - на странице кроссворда
+            defaultAllHorLi();
+            defaultAllVerLi();
+        }
+
+        function defaultChangeAndPaintVer(dataCurrentCell) {
+            defaultAllVerLi(); // убираем выделения всех вертикальных вопросов
+            changeList(+dataCurrentCell.slice(1), "hor"); // отправляем вопрос в видимую часть
+            paintQuestion("hor", dataCurrentCell, "add"); // выделяем вопрос
+        }
+
+        function defaultChangeAndPaintHor(dataCurrentCell) {
+            defaultAllHorLi(); // убираем выделения всех горизонтальных вопросов
+            changeList(+dataCurrentCell.slice(1), "ver"); // возводим вопрос на первое место
+            paintQuestion("ver", dataCurrentCell, "add"); // выделяем вопрос
+        }
+
+        function selectField(route, dataCurrentCell, toggle) {
+            defaultPaintAllCells();
+
+            // 2. выделить выбранный ряд
+
+            // получаем ряд
+            const selectedRow = document.querySelectorAll(
+                "td[data-" + route + '="' + dataCurrentCell + '"]'
+            );
+
+            // перебираем все его элементы и выделяем каждый
+            for (let i = 0; i < selectedRow.length; i++) {
+                if (toggle === "add") {
+                    selectedRow[i].classList.add("newPaintSelectedField");
+                } else {
+                    selectedRow[i].classList.remove("newPaintSelectedField");
+                }
+            }
+        }
+
+        function paintQuestion(route, dataCurrentCell, toggle) {
+            // 4. выделить - вопрос - кликнутого ряда - только по клику ряда
+
+            // получаем номер вопроса
+            let numberQuestion = +dataCurrentCell.slice(1);
+
+            // выделяем его в списке
+            if (route === "hor") {
+                if (toggle === "add") {
+                    addColorLiHor(numberQuestion);
+                } else {
+                    removeColorLiHor(numberQuestion);
+                }
+            } else {
+                if (toggle === "add") {
+                    addColorLiVer(numberQuestion);
+                } else {
+                    removeColorLiVer(numberQuestion);
+                }
+            }
+        }
+
+        function changeFocus(obj) {
+            // 3. сделать смену клетки после заполнения текущей
+
+            // получаем координаты текущей клетки
+            const column = +obj.dataset.column;
+            const row = +obj.parentElement.dataset.row;
+
+            // переносим фокус на другую
+            if (mainRout === "hor") {
+                const newColumn = column + 1;
+                focusOnNewCell(row, newColumn, "column");
+            } else {
+                const newRow = row + 1;
+                focusOnNewCell(newRow, column, "row");
+            }
+
+            function focusOnNewCell(row, column, whatHasBeenChanged) {
+                const newFocusedCell = document.querySelector(
+                    '.crossword tr[data-row="' +
+                        row +
+                        '"] td[data-column="' +
+                        column +
+                        '"]'
+                );
+
+                if (newFocusedCell && newFocusedCell.children[0]) {
+                    if (newFocusedCell.children[0].value === "") {
+                        newFocusedCell.children[0].focus();
+                    } else {
+                        newFocusedCell.children[0].select(); // сделал так, чтобы - при достижении ввода букв заполненной пересекаемой клетки - курсор мог пройти дальше и не перескакивал через значение
+                        newFocusedCell.children[0].value = "";
+                    }
+                }
+
+                selectField(mainRout, dataCurrentCell, "add"); // добавил заново выделение, чтобы - при вводе букв - оно было на месте
+            }
+        }
+
+        // расписываем алгоритм
+
+        for (let i = 0; i < horCells.length; i++) {
+            actionsId(horCells[i]);
+        }
+
+        for (let i = 0; i < verCells.length; i++) {
+            actionsId(verCells[i]);
+        }
+
+        function actionsId(numberIdCell) {
+            // вешаем обработчик на клик по нужной клетке
+            let cell = document.getElementById("d" + numberIdCell);
+
+            cell.addEventListener("click", function () {
+                // ставим блок, говорящий, что была нажата главенствующая клетка
+                clickedId = "true";
+
+                // распределяем направления по нужным клеткам
+
+                if (horCells.includes(numberIdCell)) {
+                    core("hor");
+                    defaultChangeAndPaintVer(dataCurrentCell);
+                } else {
+                    core("ver");
+                    defaultChangeAndPaintHor(dataCurrentCell);
+                }
+
+                function core(route) {
+                    // 1. создать направление по клику на клетки
+                    mainRout = route;
+
+                    dataCurrentCell =
+                        route === "hor" ? cell.dataset.hor : cell.dataset.ver;
+
+                    selectField(route, dataCurrentCell, "add");
+                }
+
+                // сделать исключения, чтобы не выделялось несколько вопросов при клике на них
+
+                selectOnlyOne(3, "hor", numberIdCell);
+                selectOnlyOne(5, "hor", numberIdCell);
+                selectOnlyOne(4, "ver", numberIdCell);
+
+                function selectOnlyOne(numberId, route, numberIdCell) {
+                    if (numberIdCell == numberId) {
+                        defaultAllLiOnCP();
+                        paintQuestion(route, "d" + numberId, "add");
+                    }
+                }
+            });
+
+            cell.children[0].addEventListener("blur", function () {
+                // снимаем блок
+                clickedId = "false";
+
+                // дефолтим ряд
+                selectField(mainRout, dataCurrentCell, "remove");
+            });
+        }
+
+        // ловим ------------------------------------------------------------------------------ клик по любой клетке ------------------------------------------------------------------------------
+
+        /*  if (
+                    e.target.parentElement.localName === "tr" &&
+                    e.target.children[0].localName === "input"
+                ) {
+                    const cell = e.target;
+                    cell.children[0].focus();
+
+                    //impot(e, cell);
+                } else */
+
+        document
+            .getElementById("crosswordPage")
+            .addEventListener("click", function (e) {
+                if (
+                    e.target.className === "horizontalQuestion" ||
+                    e.target.className === "verticalQuestion"
+                ) {
+                    // получаем номер вопроса
+                    let numberQuestion = e.target.parentElement.dataset.def;
+
+                    core();
+
+                    // if (clickedQuestion === "false") {
+                    // отключаем наведение
+                    clickedQuestion = "true";
+                    // } else {
+                    // core();
+                    // }
+
+                    function core() {
+                        // выделяем новый вопрос
+
+                        if (e.target.className === "horizontalQuestion") {
+                            // убираем прежние выделения
+                            defaultAllLiOnCP();
+
+                            // выделяем вопрос
+                            paintQuestion("hor", "d" + numberQuestion, "add");
+
+                            // выделяем поле
+                            selectField("hor", "d" + numberQuestion, "add");
+
+                            // делаем возможным ввод слова - по клику на вопрос
+                            addFocus("hor", numberQuestion);
+                        } else {
+                            // убираем прежние выделения
+                            defaultAllLiOnCP();
+
+                            // выделяем вопрос
+                            paintQuestion("ver", "d" + numberQuestion, "add");
+
+                            // выделяем поле
+                            selectField("ver", "d" + numberQuestion, "add");
+
+                            // делаем возможным ввод слова - по клику на вопрос
+                            addFocus("ver", numberQuestion);
+                        }
+
+                        function addFocus(addedRoute, numberQuestion) {
+                            // ставим фокус на направляющую клетку
+                            let objectForFocus = document.querySelectorAll(
+                                "td[data-" +
+                                    addedRoute +
+                                    '="d' +
+                                    numberQuestion +
+                                    '"]'
+                            )[0].children[0];
+
+                            objectForFocus.focus();
+
+                            // делаем возможным ввод всего слова
+                            objectForFocus.addEventListener(
+                                "input",
+                                function () {
+                                    mainRout = addedRoute;
+                                    dataCurrentCell = "d" + numberQuestion;
+                                    changeFocus(objectForFocus);
+                                }
+                            );
+                        }
+                    }
+                } else if (
+                    e.target.children[0] &&
+                    e.target.parentElement.localName === "tr" &&
+                    e.target.children[0].localName === "input"
+                ) {
+                    const cell = e.target;
+                    cell.children[0].focus();
+
+                    // когда кликаем по любой клетке, кроме первой в ряду
+
+                    let cellHorNumber;
+
+                    if (cell.dataset.hor) {
+                        cellHorNumber = +cell.dataset.hor.slice(1);
+                    }
+
+                    if (horCells.includes(cellHorNumber)) {
+                        // сделать так, чтобы, при выборе пересечения на горизонтальном ряду, любое выделение было горизонтальным
+                        mainRout = "hor";
+                        dataCurrentCell = cell.dataset.hor;
+
+                        // сначала обнуляем выделения
+                        defaultAllLiOnCP();
+
+                        // затем выделяем нужный вопрос
+                        defaultChangeAndPaintVer(dataCurrentCell);
+                    } else {
+                        mainRout = "ver";
+                        dataCurrentCell = cell.dataset.ver;
+
+                        // сначала обнуляем выделения
+                        defaultAllLiOnCP();
+
+                        // затем выделяем нужный вопрос
+                        defaultChangeAndPaintHor(dataCurrentCell);
+                    }
+
+                    selectField(mainRout, dataCurrentCell, "add");
+
+                    clickedOtherCells = "true"; // ставим блок, чтоб знать, что был клик
+                    //clickedQuestion = "false";
+                } else if (
+                    e.target.parentElement.localName == "tr" &&
+                    e.target.children.length == 0
+                ) {
+                    // когда кликаем не по полю ввода
+                    defaultPaintAllCells();
+
+                    if (dataCurrentCell) {
+                        paintQuestion(mainRout, dataCurrentCell, "remove"); // убираем выделение вопроса
+                    } else {
+                        defaultAllLiOnCP();
+                    }
+
+                    // убираем блок
+
+                    clickedOtherCells = "false";
+                    clickedQuestion = "false";
+                    keydowned = "false";
+                    defaultAllLiOnCP(); // чтобы при ситуации - клик на поле, клик на поле, клик в вопросах, клик вне их - не оставался выделен вопрос
+                } else {
+                    const cell = e.target.parentElement;
+
+                    // когда кликаем по любой клетке, кроме первой в ряду
+
+                    let cellHorNumber;
+
+                    if (cell.dataset.hor) {
+                        cellHorNumber = +cell.dataset.hor.slice(1);
+                    }
+
+                    if (horCells.includes(cellHorNumber)) {
+                        // сделать так, чтобы, при выборе пересечения на горизонтальном ряду, любое выделение было горизонтальным
+                        mainRout = "hor";
+                        dataCurrentCell = cell.dataset.hor;
+
+                        // сначала обнуляем выделения
+                        defaultAllLiOnCP();
+
+                        // затем выделяем нужный вопрос
+                        defaultChangeAndPaintVer(dataCurrentCell);
+                    } else {
+                        mainRout = "ver";
+                        dataCurrentCell = cell.dataset.ver;
+
+                        // сначала обнуляем выделения
+                        defaultAllLiOnCP();
+
+                        // затем выделяем нужный вопрос
+                        defaultChangeAndPaintHor(dataCurrentCell);
+                    }
+
+                    selectField(mainRout, dataCurrentCell, "add");
+
+                    clickedOtherCells = "true"; // ставим блок, чтоб знать, что был клик
+                    //clickedQuestion = "false";
+                }
+            });
+
+        document
+            .getElementById("crosswordPage")
+            .addEventListener("input", function (e) {
+                checkAllCells();
+                // чтобы при попытке удалить букву курсор не убегал вперёд
+                changeFocus(e.target.parentElement);
+            });
+
+        document
+            .getElementById("crosswordPage")
+            .addEventListener("keydown", function (e) {
+                keydowned = "true";
+                if (
+                    e.target.value !== "" &&
+                    (e.target.parentElement.id === "d2" ||
+                        e.target.parentElement.id === "d3" ||
+                        e.target.parentElement.id === "d5" ||
+                        e.target.parentElement.id === "d8" ||
+                        e.target.parentElement.id === "d12" ||
+                        e.target.parentElement.id === "d19")
+                ) {
+                    // сделал так, чтобы при вводе буквы в первую клетку она заменяла прежнюю а не ставилась на следующую клетку
+                    e.target.value = "";
+                } else if (e.target.value !== "" && e.key !== "Backspace") {
+                    // чтобы при попытке удалить букву курсор не убегал вперёд
+                    changeFocus(e.target.parentElement);
+                }
+
+                if (e.key === "Backspace") {
+                    e.target.value = "";
+
+                    // получаем номер ряда
+                    let numFi, rout, posColumn, posRow;
+
+                    if (
+                        e.target.parentElement.id === "d2" ||
+                        e.target.id === "d2"
+                    ) {
+                        rout = "ver";
+                        numFi = e.target.parentElement.dataset.ver;
+                        numFi = +numFi.slice(1);
+
+                        // получаем позицию в ряду
+                        posRow =
+                            e.target.parentElement.parentElement.dataset.row;
+                    } else if (e.target.parentElement.dataset.hor) {
+                        rout = "hor";
+                        numFi = e.target.parentElement.dataset.hor;
+                        numFi = +numFi.slice(1);
+
+                        // получаем позицию в ряду
+                        posColumn = e.target.parentElement.dataset.column;
+                    } else if (e.target.parentElement.dataset.ver) {
+                        rout = "ver";
+                        numFi = e.target.parentElement.dataset.ver;
+                        numFi = +numFi.slice(1);
+
+                        // получаем позицию в ряду
+                        posRow =
+                            e.target.parentElement.parentElement.dataset.row;
+                    }
+
+                    // получаем весь ряд
+                    let allFi = document.querySelectorAll(
+                        ".crossword td[data-" + rout + '="d' + numFi + '"]'
+                    );
+
+                    // перебираем и очищаем его
+                    for (let i = 0; i < allFi.length; i++) {
+                        if (
+                            posColumn &&
+                            +allFi[i].dataset.column > +posColumn
+                        ) {
+                            allFi[i].children[0].value = "";
+                        } else if (
+                            posRow &&
+                            +allFi[i].parentElement.dataset.row > +posRow
+                        ) {
+                            allFi[i].children[0].value = "";
+                        }
+                    }
+                }
+
+                checkAllCells();
+            });
+
+        document
+            .getElementById("crosswordPage")
+            .addEventListener("mouseover", function (e) {
+                if (
+                    e.target.localName === "input" &&
+                    clickedId === "false" &&
+                    clickedOtherCells === "false" &&
+                    clickedQuestion === "false" &&
+                    keydowned === "false"
+                ) {
+                    const cell = e.target.parentElement;
+
+                    // выделяем поле при наведении на него
+                    if (cell.dataset.hor) {
+                        selectField("hor", cell.dataset.hor, "add");
+                        paintQuestion("hor", cell.dataset.hor, "add"); // выделяем вопрос
+                    } else {
+                        selectField("ver", cell.dataset.ver, "add");
+                        paintQuestion("ver", cell.dataset.ver, "add"); // выделяем вопрос
+                    }
+
+                    // выделяем вопрос при наведении на поле
+                }
+
+                if (e.target.className === "horizontalQuestion") {
+                    if (
+                        clickedQuestion === "false" &&
+                        clickedOtherCells === "false" &&
+                        clickedId === "false" &&
+                        keydowned === "false"
+                    ) {
+                        // расписываем действия для горизонтальных вопросов
+
+                        // выделяем поле
+                        selectField(
+                            "hor",
+                            "d" + e.target.parentElement.dataset.def,
+                            "add"
+                        );
+                    }
+                }
+
+                if (e.target.className === "verticalQuestion") {
+                    if (
+                        clickedQuestion === "false" &&
+                        clickedOtherCells === "false" &&
+                        clickedId === "false" &&
+                        keydowned === "false"
+                    ) {
+                        // расписываем действия для горизонтальных вопросов
+
+                        // выделяем поле
+                        selectField(
+                            "ver",
+                            "d" + e.target.parentElement.dataset.def,
+                            "add"
+                        );
+                    }
+                }
+            });
+
+        document
+            .getElementById("crosswordPage")
+            .addEventListener("mouseout", function (e) {
+                if (
+                    e.target.localName === "input" &&
+                    clickedId === "false" &&
+                    clickedOtherCells === "false" &&
+                    clickedQuestion === "false" &&
+                    keydowned === "false"
+                ) {
+                    // сбрасываем все выделения
+                    defaultAllLiOnCP();
+                    defaultPaintAllCells();
+                }
+
+                if (e.target.className === "horizontalQuestion") {
+                    if (
+                        clickedQuestion === "false" &&
+                        clickedOtherCells === "false" &&
+                        clickedId === "false" &&
+                        keydowned === "false"
+                    ) {
+                        // расписываем действия для горизонтальных вопросов
+
+                        // выделяем поле
+                        selectField(
+                            "hor",
+                            "d" + e.target.parentElement.dataset.def,
+                            "remove"
+                        );
+                    }
+                }
+
+                if (e.target.className === "verticalQuestion") {
+                    if (
+                        clickedQuestion === "false" &&
+                        clickedOtherCells === "false" &&
+                        clickedId === "false" &&
+                        keydowned === "false"
+                    ) {
+                        // расписываем действия для горизонтальных вопросов
+
+                        // выделяем поле
+                        selectField(
+                            "ver",
+                            "d" + e.target.parentElement.dataset.def,
+                            "remove"
+                        );
+                    }
+                }
+            });
+    </script>
+</html>

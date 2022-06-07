@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>final page</title>
+        <link rel="stylesheet" href="style/main.css" />
+        <style>
+            body {
+                background-image: url(./imgs/background.svg);
+                background-size: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="finalPage">
+            <div id="closeIconFinalWindow">
+                <img src="./imgs/closeIcon.svg" />
+            </div>
+            <div id="centerBlockFinal">
+                <div id="congratulation">Поздравляем!</div>
+                <div id="editorialResponse">Вы полностью решили кроссворд.</div>
+                <div id="finalTimeMessage">
+                    <div>Ваше время</div>
+                    <div id="finalTime"></div>
+                    <div>минут</div>
+                </div>
+                <div id="btnFinal">закрыть</div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        document
+            .getElementById("closeIconFinalWindow")
+            .addEventListener("click", function () {
+                localStorage.setItem("closeModalWindow", "true");
+            });
+
+        document
+            .getElementById("btnFinal")
+            .addEventListener("click", function () {
+                localStorage.setItem("closeModalWindow", "true");
+            });
+    </script>
+
+    <script>
+        function showFinalTime() {
+            setInterval(function () {
+                document.getElementById("finalTime").textContent =
+                    localStorage.getItem("minutes");
+            }, 1000);
+        }
+
+        showFinalTime();
+    </script>
+</html>

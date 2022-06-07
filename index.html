@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Crossword</title>
+        <link rel="stylesheet" href="style/main.css" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: url(./imgs/startPage.svg);
+                background-size: 93%;
+                background-repeat: no-repeat;
+                background-position: 100% 1.5%;
+            }
+
+            #modalWndowPageCrossword object,
+            #modalWndowPageAnswers object,
+            #modalWndowPageFinal object {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                background-color: white;
+                justify-content: center;
+            }
+
+            #startCrosswordBtn {
+                z-index: 4;
+            }
+
+            .hideModalWindow {
+                z-index: -2;
+                opacity: 0;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="startCrosswordBtn">старт</div>
+        <div id="modalWndowPageCrossword"></div>
+        <div id="modalWndowPageAnswers"></div>
+        <div id="modalWndowPageFinal"></div>
+    </body>
+
+    <script>
+        // common fnctns
+        function deletedModalWindows(deleteCross, deleteAnsw, deleteFinal) {
+            if (deleteCross === "delete") {
+                document.getElementById("modalWndowPageCrossword").innerHTML =
+                    "";
+            }
+
+            if (deleteAnsw === "delete") {
+                document.getElementById("modalWndowPageAnswers").innerHTML = "";
+            }
+
+            if (deleteFinal === "delete") {
+                document.getElementById("modalWndowPageFinal").innerHTML = "";
+            }
+        }
+    </script>
+
+    <script>
+        localStorage.removeItem("showFinal");
+        localStorage.setItem("secund", 0);
+        localStorage.setItem("minutes", 0);
+
+        // общие переменные
+
+        let count = 0;
+
+        // общие функции
+        function playSound(nameSound) {
+            let audio = new Audio(); // Создаём новый элемент Audio
+            audio.src = "./sounds/" + nameSound + ".mp3"; // Указываем путь к звуку "клика"
+            audio.autoplay = true; // Автоматически запускаем
+
+            if (nameSound === "finalAccord") {
+                audio.volume = 0;
+
+                let upSound = setInterval(function () {
+                    audio.volume += 0.01;
+                    if (audio.volume == 0.1) clearInterval(upSound);
+                }, 500);
+            } else {
+                audio.volume = 0.1;
+            }
+        }
+
+        let secundomerId;
+
+        function secundomer() {
+            // получаем сохраненное время
+            // изначально 0 минут 0 секунд
+            let saveSec = localStorage.getItem("secund");
+            let saveMin = localStorage.getItem("minutes");
+
+            function textContent() {
+                // сначала повышаем секунды
+                saveSec++;
+
+                // затем повышаем минуты
+                if (saveSec % 60 === 0) {
+                    saveMin++;
+
+                    // очищаем секунды
+                    saveSec = 0;
+                }
+
+                // далее сохраняем
+                localStorage.setItem("secund", saveSec);
+                localStorage.setItem("minutes", saveMin);
+            }
+
+            secundomerId = setInterval(textContent, 1000);
+        }
+
+        function downloadPDF() {
+            localStorage.removeItem("downloadPDF");
+
+            function core() {
+                if (localStorage.getItem("downloadPDF") === "true") {
+                    cross_download();
+                    playSound("btnsSound");
+                    localStorage.removeItem("downloadPDF");
+                }
+            }
+
+            setInterval(core, 1000);
+
+            function cross_download() {
+                playSound("btnsSound");
+
+                let req = new XMLHttpRequest();
+                req.open("GET", "./files/crossword.pdf", true);
+                req.responseType = "blob";
+
+                let __fileName = "Кроссворд Закупки";
+
+                req.onload = function (event) {
+                    let blob = req.response;
+                    let contentType = req.getResponseHeader("content-type");
+
+                    if (window.navigator.msSaveOrOpenBlob) {
+                        // Internet Explorer
+                        window.navigator.msSaveOrOpenBlob(
+                            new Blob([blob], { type: contentType }),
+                            "Кроссворд Закупки"
+                        );
+                    } else {
+                        let link = document.createElement("a");
+                        document.body.appendChild(link);
+                        link.download = __fileName;
+                        link.href = window.URL.createObjectURL(blob);
+                        link.click();
+                        document.body.removeChild(link); //remove the link when done
+                    }
+                };
+
+                req.send();
+            }
+        }
+
+        downloadPDF();
+    </script>
+
+    <script>
+        // функционал переключений модальных окон
+
+        function showCross() {
+            document.getElementById("modalWndowPageCrossword").innerHTML =
+                '<object type="text/html" data="crossPage.html"></object>';
+        }
+
+        function showAnsw() {
+            document.getElementById("modalWndowPageAnswers").innerHTML =
+                '<object type="text/html" data="answPage.html"></object>';
+        }
+
+        function showFinal() {
+            document.getElementById("modalWndowPageFinal").innerHTML =
+                '<object type="text/html" data="finalPage.html"></object>';
+        }
+
+        showCross();
+
+        document
+            .getElementById("modalWndowPageCrossword")
+            .classList.add("hideModalWindow");
+
+        document.getElementById("startCrosswordBtn").style.zIndex = 4;
+
+        function selectModal(modalType) {
+            // показать модальные окна
+
+            if (modalType === "cross") {
+                document
+                    .getElementById("modalWndowPageCrossword")
+                    .classList.remove("hideModalWindow");
+
+                deletedModalWindows("no delete", "delete", "delete");
+            } else if (modalType === "answ") {
+                showAnsw();
+
+                document
+                    .getElementById("modalWndowPageCrossword")
+                    .classList.add("hideModalWindow");
+
+                deletedModalWindows("no delete", "no delete", "delete");
+            } else if (modalType === "final") {
+                showFinal();
+
+                deletedModalWindows("delete", "delete", "no delete");
+            }
+        }
+
+        function showFinalPage() {
+            function checkFinal() {
+                if (localStorage.getItem("showFinal") === "true") {
+                    selectModal("final");
+                    playSound("finalAccord");
+                    localStorage.removeItem("showFinal");
+                }
+            }
+
+            setInterval(checkFinal, 1000);
+        }
+
+        showFinalPage();
+    </script>
+
+    <script>
+        // функционал при клике на крестик и кнопку "закрыть"
+        function clickIconClose() {
+            localStorage.removeItem("closeModalWindow");
+
+            function core() {
+                if (localStorage.getItem("closeModalWindow") === "true") {
+                    playSound("btnsSound");
+
+                    /* 
+
+                    deletedModalWindows("delete", "delete", "delete");*/
+
+                    document
+                        .getElementById("modalWndowPageCrossword")
+                        .classList.add("hideModalWindow");
+
+                    deletedModalWindows("no delete", "delete", "delete");
+
+                    count = 0;
+
+                    // дефолтим таймер
+                    clearInterval(secundomerId);
+
+                    localStorage.setItem("secund", 0);
+                    localStorage.setItem("minutes", 0);
+                    localStorage.removeItem("closeModalWindow");
+
+                    document
+                        .getElementById("startCrosswordBtn")
+                        .classList.remove("hideModalWindow");
+                }
+            }
+
+            setInterval(core, 1000);
+        }
+
+        clickIconClose();
+
+        // функционал при клике на "ответы на кроссворд"
+        function clickLinkToAnswers() {
+            localStorage.removeItem("toAnswers");
+
+            function core() {
+                if (localStorage.getItem("toAnswers") === "true") {
+                    playSound("btnsSound");
+
+                    selectModal("answ");
+                    count = 1;
+
+                    localStorage.removeItem("toAnswers");
+                }
+            }
+
+            setInterval(core, 1000);
+        }
+
+        clickLinkToAnswers();
+
+        // функционал при клике на "вернуться к кроссворду"
+
+        function clickLinkToCrossword() {
+            localStorage.removeItem("toCrossword");
+
+            function core() {
+                if (localStorage.getItem("toCrossword") === "true") {
+                    playSound("btnsSound");
+
+                    selectModal("cross");
+                    count = 0;
+
+                    localStorage.removeItem("toCrossword");
+                }
+            }
+
+            setInterval(core, 1000);
+        }
+
+        clickLinkToCrossword();
+    </script>
+
+    <script>
+        function openCrossword() {
+            // включаем кроссворд
+            document.getElementById("startCrosswordBtn").onclick = function () {
+                playSound("crosswordOpen");
+
+                document
+                    .getElementById("startCrosswordBtn")
+                    .classList.add("hideModalWindow");
+
+                secundomer(); // включен отсчёт
+
+                // открываем кроссворд
+                selectModal("cross");
+
+                if (document.getElementById("modalWndowPageCrossword")) {
+                    deletedModalWindows("delete", "delete", "delete");
+                    showCross();
+                }
+            };
+        }
+
+        openCrossword();
+    </script>
+</html>

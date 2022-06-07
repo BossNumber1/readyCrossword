@@ -1,0 +1,107 @@
+#startCrosswordBtn {
+    grid-area: startCrosswordBtn;
+    border: 0.5px solid #0079c2;
+    position: absolute;
+    cursor: pointer;
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 600;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 172px;
+        height: 29px;
+        top: 401px;
+        right: 166px;
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 1500px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 237px;
+        height: 36px;
+        top: 481px;
+        right: 170px;
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 1600px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 540px;
+        right: 220px;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 1700px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 555px;
+        right: 176px;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 1900px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 611px;
+        right: 222px;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 2000px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 666px;
+        right: 278px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 2300px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 762px;
+        right: 348px;
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 2500px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 804px;
+        right: 392px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 2700px) and (orientation: landscape) {
+    #startCrosswordBtn {
+        width: 287px;
+        height: 46px;
+        top: 908px;
+        right: 475px;
+        font-size: 15px;
+    }
+}

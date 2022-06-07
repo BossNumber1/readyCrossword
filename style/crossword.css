@@ -1,0 +1,354 @@
+.crossword td {
+    /* border: 1px solid red; */
+    /* background-color: #fff; */
+    padding: 6px;
+    text-align: left;
+    vertical-align: top;
+    width: 30px;
+    height: 30px;
+    min-width: 10px;
+    min-height: 10px;
+    max-width: 70px;
+    max-height: 70px;
+}
+
+.crosswordAnswers td {
+    /* border: 1px solid #0a4070; */
+    padding: 6px;
+    text-align: left;
+    vertical-align: top;
+    width: 30px;
+    height: 30px;
+    min-width: 10px;
+    min-height: 10px;
+    max-width: 70px;
+    max-height: 70px;
+}
+
+.crossword td:empty,
+.crosswordAnswers td:empty {
+    border: 0;
+}
+
+.crossword td[data-ver] {
+    border-bottom: 1px solid #0a4070;
+    border-left: 1px solid #0a4070;
+    border-right: 1px solid #0a4070;
+    background-color: #2aaeef;
+}
+
+.crosswordAnswers td[data-ver] {
+    border-bottom: 1px solid #0a4070;
+    border-left: 1px solid #0a4070;
+    border-right: 1px solid #0a4070;
+}
+
+.crossword td[data-hor]
+/* ,
+.crosswordAnswers td[data-hor] */ {
+    border-top: 1px solid #0a4070;
+    border-bottom: 1px solid #0a4070;
+    border-right: 1px solid #0a4070;
+}
+
+.crosswordAnswers td[data-hor] {
+    border-top: 1px solid #0a4070;
+    border-bottom: 1px solid #0a4070;
+    border-right: 1px solid #0a4070;
+}
+
+.crossword td[data-ver][data-hor],
+.crosswordAnswers td[data-ver][data-hor] {
+    border-right: 1px solid #0a4070;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid #0a4070;
+}
+
+.crossword td[data-ver][data-hor]:not(.sel)
+/* ,
+.crosswordAnswers td[data-ver][data-hor]:not(.sel)  */ {
+    background-color: #0079c2;
+}
+
+.crossword td[data-hor]:not(.sel)
+/* ,
+.crosswordAnswers td[data-hor]:not(.sel)  */ {
+    background-color: #0079c2;
+}
+
+.crossword td.err
+/* ,
+.crosswordAnswers td.err  */ {
+    background-color: #f00;
+}
+
+.crossword td[id]
+/* ,
+.crosswordAnswers td[id]  */ {
+    counter-increment: req;
+}
+
+.crossword td input,
+.crosswordAnswers td input {
+    background-color: transparent;
+    border: 0 none;
+    /* font-size: 15px; */
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 600;
+    /* font-size: 25px; */
+    line-height: 74px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: #0a4070;
+    width: 25px;
+    height: 25px;
+    min-width: 10px;
+    min-height: 10px;
+    max-width: 70px;
+    max-height: 70px;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.crossword td input:-webkit-autofill
+/* ,
+.crosswordAnswers td input:-webkit-autofill  */ {
+    background-color: white;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.crossword td.sel
+/* ,
+.crosswordAnswers td.sel  */ {
+    background-color: white;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* .crossword td {
+    text-align: center;
+} */
+
+.crossword td:not(.sel) input
+/* ,
+.crosswordAnswers td:not(.sel) input  */ {
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 600;
+    /* font-size: 25px; */
+    line-height: 74px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: #ffffff;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.crosswordAnswers td input {
+    color: #0a4070;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 10px;
+        height: 10px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 10px;
+        height: 10px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 10px;
+        /* color: #f00; */
+    }
+}
+
+@media (min-width: 1500px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 15px;
+        height: 15px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 15px;
+        height: 15px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 15px;
+        /* color: #f00; */
+    }
+}
+
+@media (min-width: 1700px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 20px;
+        height: 20px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 20px;
+        height: 20px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1900px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 25px;
+        height: 25px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 25px;
+        height: 25px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 2000px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 30px;
+        height: 30px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 30px;
+        height: 30px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 2300px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 35px;
+        height: 35px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 35px;
+        height: 35px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 35px;
+    }
+}
+
+@media (min-width: 2500px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 40px;
+        height: 40px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 40px;
+        height: 40px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 40px;
+    }
+}
+
+@media (min-width: 2700px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 45px;
+        height: 45px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 45px;
+        height: 45px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 45px;
+    }
+}
+
+@media (min-width: 2900px) and (orientation: landscape) {
+    .crossword td,
+    .crosswordAnswers td {
+        width: 65px;
+        height: 65px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input {
+        width: 65px;
+        height: 65px;
+    }
+
+    .crossword td input,
+    .crosswordAnswers td input,
+    .crossword td:not(.sel) input {
+        font-size: 65px;
+    }
+}

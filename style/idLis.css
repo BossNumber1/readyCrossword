@@ -1,0 +1,212 @@
+#hor li div:not(.horizontalQuestion),
+#ver li div:not(.verticalQuestion),
+#commonOl li div:first-child,
+#commonOl li div:first-child {
+    width: 19px;
+    height: 226px;
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 23px;
+    letter-spacing: 0.06em;
+}
+
+#hor li div:not(.horizontalQuestion):hover,
+#ver li div:not(.verticalQuestion):hover,
+#commonOl li div:first-child:hover,
+#commonOl li div:first-child:hover {
+    background-color: white;
+}
+
+#hor li,
+#ver li,
+#commonOl li {
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 20px;
+} /* Убираем исходную нумерацию у списка */
+
+ol li:before {
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 23px;
+    letter-spacing: 0.06em;
+}
+
+#li0 div:not(.horizontalQuestion),
+#li1 div:not(.horizontalQuestion),
+#li2 div:not(.horizontalQuestion),
+#li3 div:not(.horizontalQuestion),
+#li4 div:not(.horizontalQuestion),
+#li5 div:not(.horizontalQuestion),
+#li6 div:not(.horizontalQuestion),
+#li7 div:not(.horizontalQuestion),
+#li8 div:not(.horizontalQuestion),
+#li9 div:not(.horizontalQuestion),
+#li0ver div:not(.verticalQuestion),
+#li1ver div:not(.verticalQuestion),
+#li2ver div:not(.verticalQuestion),
+#li3ver div:not(.verticalQuestion),
+#li4ver div:not(.verticalQuestion),
+#li5ver div:not(.verticalQuestion),
+#li6ver div:not(.verticalQuestion),
+#li7ver div:not(.verticalQuestion),
+#li8ver div:not(.verticalQuestion),
+#li9ver div:not(.verticalQuestion),
+#newli1 div:not(.horizontalQuestion2),
+#newli2 div:not(.verticalQuestion2),
+#newli3 div:not(.horizontalQuestion2),
+#newli4 div:not(.verticalQuestion2),
+#newli5 div:not(.horizontalQuestion2),
+#newli6 div:not(.verticalQuestion2),
+#newli7 div:not(.verticalQuestion2),
+#newli8 div:not(.horizontalQuestion2),
+#newli9 div:not(.horizontalQuestion2),
+#newli10 div:not(.verticalQuestion2),
+#newli11 div:not(.verticalQuestion2),
+#newli12 div:not(.horizontalQuestion2),
+#newli13 div:not(.verticalQuestion2),
+#newli14 div:not(.horizontalQuestion2),
+#newli15 div:not(.verticalQuestion2),
+#newli16 div:not(.verticalQuestion2),
+#newli17 div:not(.horizontalQuestion2),
+#newli18 div:not(.verticalQuestion2),
+#newli19 div:not(.horizontalQuestion2),
+#newli20 div:not(.horizontalQuestion2) {
+    position: relative;
+    width: 11px;
+    height: 100% !important;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#newli1 div:not(.horizontalQuestion2),
+#newli2 div:not(.verticalQuestion2),
+#newli3 div:not(.horizontalQuestion2),
+#newli4 div:not(.verticalQuestion2),
+#newli5 div:not(.horizontalQuestion2),
+#newli6 div:not(.verticalQuestion2),
+#newli7 div:not(.verticalQuestion2),
+#newli8 div:not(.horizontalQuestion2),
+#newli9 div:not(.horizontalQuestion2),
+#newli10 div:not(.verticalQuestion2),
+#newli11 div:not(.verticalQuestion2),
+#newli12 div:not(.horizontalQuestion2),
+#newli13 div:not(.verticalQuestion2),
+#newli14 div:not(.horizontalQuestion2),
+#newli15 div:not(.verticalQuestion2),
+#newli16 div:not(.verticalQuestion2),
+#newli17 div:not(.horizontalQuestion2),
+#newli18 div:not(.verticalQuestion2),
+#newli19 div:not(.horizontalQuestion2),
+#newli20 div:not(.horizontalQuestion2) {
+    color: #0079c2;
+}
+
+/* .horizontalQuestion2,
+.verticalQuestion2 {
+    margin-right: -250px;
+} */
+
+#li0 div:not(.horizontalQuestion),
+#li1 div:not(.horizontalQuestion),
+#li2 div:not(.horizontalQuestion),
+#li3 div:not(.horizontalQuestion),
+#li4 div:not(.horizontalQuestion),
+#li5 div:not(.horizontalQuestion),
+#li6 div:not(.horizontalQuestion),
+#li7 div:not(.horizontalQuestion),
+#li8 div:not(.horizontalQuestion),
+#li9 div:not(.horizontalQuestion) {
+    color: #0079c2;
+}
+
+#li0ver div:not(.verticalQuestion),
+#li1ver div:not(.verticalQuestion),
+#li2ver div:not(.verticalQuestion),
+#li3ver div:not(.verticalQuestion),
+#li4ver div:not(.verticalQuestion),
+#li5ver div:not(.verticalQuestion),
+#li6ver div:not(.verticalQuestion),
+#li7ver div:not(.verticalQuestion),
+#li8ver div:not(.verticalQuestion),
+#li9ver div:not(.verticalQuestion) {
+    color: #2aaeef;
+}
+
+#li0:before,
+#li1:before,
+#li2:before,
+#li3:before,
+#li4:before,
+#li0ver:before,
+#li1ver:before,
+#li2ver:before,
+#li3ver:before,
+#li5:before,
+#li6:before,
+#li7:before,
+#li8:before,
+#li9:before,
+#li4ver:before,
+#li5ver:before,
+#li6ver:before,
+#li7ver:before,
+#li8ver:before,
+#li9ver:before {
+    margin-left: -25px;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+    /* .horizontalQuestion,
+    .verticalQuestion {
+        font-size: 15px;
+        background-color: blue;
+    } */
+    #hor li div:not(.horizontalQuestion),
+    #ver li div:not(.verticalQuestion),
+    #commonOl li div:not(.horizontalQuestion2),
+    #commonOl li div:not(.verticalQuestion2) {
+        font-size: 13px;
+    }
+
+    .horizontalQuestion,
+    .verticalQuestion,
+    .horizontalQuestion2,
+    .verticalQuestion2 {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 1500px) and (orientation: landscape) {
+    /* .horizontalQuestion,
+    .verticalQuestion {
+        font-size: 15px;
+        background-color: blue;
+    } */
+    #hor li div:not(.horizontalQuestion),
+    #ver li div:not(.verticalQuestion),
+    #commonOl li div:not(.horizontalQuestion2),
+    #commonOl li div:not(.verticalQuestion2) {
+        font-size: 15px;
+    }
+
+    .horizontalQuestion,
+    .verticalQuestion,
+    .horizontalQuestion2,
+    .verticalQuestion2 {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1900px) and (orientation: landscape) {
+    .horizontalQuestion,
+    .verticalQuestion,
+    .horizontalQuestion2,
+    .verticalQuestion2 {
+        font-size: 20px;
+    }
+}

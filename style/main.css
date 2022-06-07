@@ -1,0 +1,258 @@
+@import "grids.css";
+@import "crossword.css";
+@import "idDs.css";
+@import "ids.css";
+@import "idLis.css";
+@import "finalPage.css";
+@import "startPage.css";
+
+body {
+    box-sizing: border-box;
+    overflow-y: hidden;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+#startPage,
+#answersPage,
+#finalPage {
+    top: 0;
+    left: 0;
+    /* width: 1000px;
+    height: 500px; */
+    position: absolute;
+    z-index: -2;
+}
+
+#startPage,
+#crosswordPage,
+#answersPage,
+#finalPage {
+    opacity: 1;
+}
+
+/* other styles */
+
+#definitions .pointer li,
+#definitionsAnswers .pointer li {
+    cursor: pointer;
+}
+
+#hor,
+#ver {
+    color: #000000;
+    font-weight: normal;
+}
+
+.horizontalQuestion:hover,
+.horizontalQuestion2:hover,
+.verticalQuestion2:hover {
+    color: white;
+    background-color: #0079c2;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.verticalQuestion:hover {
+    color: white;
+    background-color: #2aaeef;
+}
+
+#horizontalTitle,
+#verticalTitle,
+#horizontalTitleAnswers {
+    margin-left: 48.5px;
+    width: 185px;
+    height: 30px;
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0.06em;
+    color: #2aaeef;
+}
+
+#horizontalTitle {
+    color: #0079c2;
+}
+
+#horizontalTitleAnswers {
+    color: #005f99;
+}
+
+.horQuestion,
+.verQuestion {
+    background-color: white;
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+}
+
+.horQuestion {
+    line-height: 74px;
+    color: #0079c2;
+}
+
+.verQuestion {
+    color: #2aaeef;
+}
+
+#firstElemTimer {
+    border-bottom: 1px solid #0079c2;
+    margin-bottom: 22px;
+}
+
+#firstElemTimer,
+#secondElemTimer,
+#thirdElemTimer {
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-weight: 600;
+    line-height: 74px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.17em;
+}
+
+#firstElemTimer {
+    height: 25px;
+    margin-top: 22px;
+    padding-left: 30px;
+}
+
+#firstElemTimer,
+#secondElemTimer {
+    color: #005f99;
+    text-transform: uppercase;
+}
+
+@media (min-width: 1000px) and (orientation: landscape) {
+    #verticalTitle {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        font-size: 13px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        font-size: 13px;
+        /* margin-left: calc(50% - 15px / 2); */
+    }
+}
+
+@media (min-width: 1500px) and (orientation: landscape) {
+    #verticalTitle {
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        font-size: 15px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        font-size: 15px;
+        /* margin-left: calc(50% - 15px / 2); */
+    }
+}
+
+@media (min-width: 1700px) and (orientation: landscape) {
+    #verticalTitle {
+        margin-top: 45px;
+        margin-bottom: 20px;
+    }
+
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        font-size: 18px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        font-size: 18px;
+        /* margin-left: calc(50% - 18px / 2); */
+    }
+}
+
+@media (min-width: 1900px) and (orientation: landscape) {
+    #verticalTitle {
+        margin-top: 35px;
+        margin-bottom: 30px;
+    }
+
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        margin-bottom: 30px;
+        font-size: 21px;
+    }
+
+    #horizontalTitleAnswers {
+        font-size: 21px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        font-size: 21px;
+        /* margin-left: calc(50% - 21px / 2); */
+    }
+}
+
+@media (min-width: 2000px) and (orientation: landscape) {
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        width: 255px;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    #verticalTitle {
+        margin-top: 35px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        /* margin-left: calc(50% - 24px / 2); */
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 2300px) and (orientation: landscape) {
+    #horizontalTitle,
+    #verticalTitle,
+    #horizontalTitleAnswers {
+        width: 255px;
+        font-size: 26px;
+        margin-bottom: 35px;
+    }
+
+    #verticalTitle {
+        margin-top: 35px;
+    }
+
+    .horQuestion,
+    .verQuestion {
+        /* margin-left: calc(50% - 26px / 2); */
+        font-size: 26px;
+    }
+}
